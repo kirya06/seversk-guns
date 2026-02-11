@@ -1,17 +1,18 @@
 {
-	"required": true,
-	"package": "kirya.seversk.guns.mixin",
-	"compatibilityLevel": "JAVA_21",
-	"mixins": [
-		"ExampleMixin"
-	],
-	"client": [
-		"client.GunInput"
-	],
-	"injectors": {
-		"defaultRequire": 1
-	},
-	"overwrites": {
-		"requireAnnotations": true
+  "required": true,
+  "package": "kirya.seversk.guns.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": [
+    "ExampleMixin"
+  ],
+  "client": [
+    "client.GunInput",
+    "client.GunPose"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "overwrites": {
+    "requireAnnotations": true
 	}
 }
