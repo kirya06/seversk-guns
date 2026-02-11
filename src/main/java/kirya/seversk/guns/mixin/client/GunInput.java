@@ -4,6 +4,8 @@ import kirya.seversk.guns.SeverskGuns;
 import kirya.seversk.guns.items.GunItem;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.item.ItemStack;
 import org.jspecify.annotations.Nullable;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -22,9 +24,18 @@ public class GunInput {
     public void handleInputEvents(CallbackInfo ci) {
         assert this.player != null;
 
-        if (this.player.getMainHandItem().getItem() instanceof GunItem item) {
-            if (Minecraft.getInstance().options.keyAttack.isDown()) {
+        var cooldown = this.player.getCooldowns();
+        ItemStack itemStack = this.player.getMainHandItem();
 
+        if (this.player.getMainHandItem().getItem() instanceof GunItem item) {
+            if (Minecraft.getInstance().options.keyAttack.isDown() && !cooldown.isOnCooldown(itemStack)) {
+
+                if (!item.gunProperties.isAuto) {
+                    Minecraft.getInstance().options.keyAttack.setDown(false);
+                }
+
+                this.player.playSound(SoundEvents.CROSSBOW_SHOOT);
+                this.player.getCooldowns().addCooldown(itemStack, item.gunProperties.attackCooldownTicks);
             }
         }
     }

@@ -18,7 +18,8 @@ import java.util.function.Function;
 
 public class ModItems {
 
-    public static final Item GENERIC_PISTOL = register("generic_pistol", GunItem::new, new Item.Properties());
+    public static final GunItem GENERIC_PISTOL = register("generic_pistol", GunItem::new, new Item.Properties())
+            .withGunProperties(GunProperties.getGenericGun());
 
 
     // creative tab
