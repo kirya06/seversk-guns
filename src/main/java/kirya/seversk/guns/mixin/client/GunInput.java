@@ -19,28 +19,6 @@ public class GunInput {
     @Shadow
     public LocalPlayer player;
 
-    /// fire if mouse button pressed.
-    @Inject(method = "handleKeybinds", at = @At("TAIL"))
-    public void handleInputEvents(CallbackInfo ci) {
-        assert this.player != null;
-
-        var cooldown = this.player.getCooldowns();
-        var minecraft = Minecraft.getInstance();
-        ItemStack itemStack = this.player.getMainHandItem();
-
-        if (this.player.getMainHandItem().getItem() instanceof GunItem item) {
-            if (minecraft.options.keyAttack.isDown() && !cooldown.isOnCooldown(itemStack)) {
-
-                if (!item.gunProperties.isAuto) {
-                    minecraft.options.keyAttack.setDown(false);
-                }
-
-                this.player.playSound(SoundEvents.CROSSBOW_SHOOT);
-                cooldown.addCooldown(itemStack, item.gunProperties.attackCooldownTicks);
-            }
-        }
-    }
-
     /// do not initiate vanilla attacking when holding GunItem
     @Inject(method = "startAttack", at = @At("HEAD"), cancellable = true)
     public void beforeUseItem(CallbackInfoReturnable<Boolean> cir) {
