@@ -1,6 +1,5 @@
 package kirya.seversk.guns.mixin.client;
 
-
 import kirya.seversk.guns.items.GunItem;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
@@ -26,16 +25,18 @@ public class GunInput {
         assert this.player != null;
 
         var cooldown = this.player.getCooldowns();
+        var minecraft = Minecraft.getInstance();
         ItemStack itemStack = this.player.getMainHandItem();
 
         if (this.player.getMainHandItem().getItem() instanceof GunItem item) {
-            if (Minecraft.getInstance().options.keyAttack.isDown() && !cooldown.isOnCooldown(itemStack)) {
+            if (minecraft.options.keyAttack.isDown() && !cooldown.isOnCooldown(itemStack)) {
 
                 if (!item.gunProperties.isAuto) {
-                    Minecraft.getInstance().options.keyAttack.setDown(false);
+                    minecraft.options.keyAttack.setDown(false);
                 }
+
                 this.player.playSound(SoundEvents.CROSSBOW_SHOOT);
-                this.player.getCooldowns().addCooldown(itemStack, item.gunProperties.attackCooldownTicks);
+                cooldown.addCooldown(itemStack, item.gunProperties.attackCooldownTicks);
             }
         }
     }

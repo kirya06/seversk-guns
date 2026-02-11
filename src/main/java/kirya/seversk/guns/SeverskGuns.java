@@ -14,10 +14,14 @@ public class SeverskGuns implements ModInitializer {
 	// That way, it's clear which mod wrote info, warnings, and errors.
 	public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
 
+	public static void print(Object msg) {
+		LOGGER.info(msg.toString());
+	}
+
 	@Override
 	public void onInitialize() {
 		ModItems.initialize();
 
-		LOGGER.info("Seversk Guns initialized");
+		print("initialization finished");
 	}
 }
