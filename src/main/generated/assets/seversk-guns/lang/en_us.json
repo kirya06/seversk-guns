@@ -1,3 +1,5 @@
 {
-  "item.seversk-guns.generic_pistol": "Generic Pistol"
+  "item.seversk-guns.generic_pistol": "Generic Pistol",
+  "key.category.seversk-guns.gun": "Seversk Guns",
+  "key.seversk-guns.reload": "Reload"
 }

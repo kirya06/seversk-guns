@@ -18,6 +18,9 @@
 		"main": [
 			"kirya.seversk.guns.SeverskGuns"
 		],
+		"client": [
+			"kirya.seversk.guns.client.SeverskGunsClient"
+		],
 		"fabric-datagen": [
 			"kirya.seversk.guns.SeverskGunsDataGenerator"
 		]

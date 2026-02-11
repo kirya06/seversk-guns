@@ -3,6 +3,7 @@ package kirya.seversk.guns.datagen;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
 import net.minecraft.core.HolderLookup;
+import org.jspecify.annotations.NonNull;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -14,7 +15,15 @@ public class EnglishProvider extends FabricLanguageProvider {
     }
 
     @Override
-    public void generateTranslations(HolderLookup.Provider wrapperLookup, TranslationBuilder translationBuilder) {
+    public void generateTranslations(HolderLookup.@NonNull Provider wrapperLookup, TranslationBuilder translationBuilder) {
+        /// items
+
         translationBuilder.add("item.seversk-guns.generic_pistol", "Generic Pistol");
+
+        /// keybinds
+
+        translationBuilder.add("key.category.seversk-guns.gun", "Seversk Guns");
+        translationBuilder.add("key.seversk-guns.reload", "Reload");
+
     }
 }
