@@ -1,10 +1,14 @@
 package kirya.seversk.guns.mixin.client;
 
+import com.mojang.authlib.minecraft.client.MinecraftClient;
+import com.mojang.blaze3d.systems.TimerQuery;
 import kirya.seversk.guns.SeverskGuns;
 import kirya.seversk.guns.items.GunItem;
+import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.item.ItemStack;
 import org.jspecify.annotations.Nullable;
 import org.spongepowered.asm.mixin.Final;
@@ -13,6 +17,8 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 @Mixin(Minecraft.class)
 public class GunInput {
@@ -20,6 +26,7 @@ public class GunInput {
     @Shadow
     public LocalPlayer player;
 
+    /// fire if mouse button pressed.
     @Inject(method = "handleKeybinds", at = @At("TAIL"))
     public void handleInputEvents(CallbackInfo ci) {
         assert this.player != null;
@@ -33,10 +40,21 @@ public class GunInput {
                 if (!item.gunProperties.isAuto) {
                     Minecraft.getInstance().options.keyAttack.setDown(false);
                 }
-
                 this.player.playSound(SoundEvents.CROSSBOW_SHOOT);
                 this.player.getCooldowns().addCooldown(itemStack, item.gunProperties.attackCooldownTicks);
             }
+        }
+    }
+
+    /// do not initiate vanilla attacking when holding GunItem
+    @Inject(method = "startAttack", at = @At("HEAD"), cancellable = true)
+    public void beforeUseItem(CallbackInfoReturnable<Boolean> cir) {
+        assert this.player != null;
+
+        var item = this.player.getMainHandItem().getItem();
+
+        if (item instanceof GunItem) {
+            cir.setReturnValue(false);
         }
     }
 
