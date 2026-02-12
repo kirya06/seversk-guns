@@ -2,7 +2,9 @@ package kirya.seversk.guns.client;
 
 import kirya.seversk.guns.items.GunItem;
 import kirya.seversk.guns.items.ModComponents;
+import kirya.seversk.guns.network.C2S.FireGunPayload;
 import net.fabricmc.fabric.api.client.item.v1.ItemTooltipCallback;
+import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.network.chat.Component;
@@ -50,6 +52,9 @@ public class ClientListener {
                 }
 
                 player.playSound(SoundEvents.ARROW_SHOOT);
+                FireGunPayload payload = new FireGunPayload((byte)0);
+                ClientPlayNetworking.send(payload);
+
                 cd.addCooldown(itemStack, item.gunProperties.attackCooldownTicks);
             }
         }

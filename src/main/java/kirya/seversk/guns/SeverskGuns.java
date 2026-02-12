@@ -2,8 +2,12 @@ package kirya.seversk.guns;
 
 import kirya.seversk.guns.items.ModComponents;
 import kirya.seversk.guns.items.ModItems;
+import kirya.seversk.guns.network.C2S.FireGunPayload;
+import kirya.seversk.guns.network.ServerNetworkListener;
 import net.fabricmc.api.ModInitializer;
 
+import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -21,6 +25,11 @@ public class SeverskGuns implements ModInitializer {
 
 	@Override
 	public void onInitialize() {
+		// packets/payloads
+		PayloadTypeRegistry.playC2S().register(FireGunPayload.ID, FireGunPayload.CODEC);
+
+		// server events
+		ServerPlayNetworking.registerGlobalReceiver(FireGunPayload.ID, ServerNetworkListener::fireGunPayloadReceive);
 
 		ModComponents.initialize();
 		ModItems.initialize();
