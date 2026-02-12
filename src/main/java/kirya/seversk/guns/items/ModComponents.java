@@ -12,7 +12,7 @@ public class ModComponents {
     public static final DataComponentType<Integer> GUN_AMMO = Registry.register(
             BuiltInRegistries.DATA_COMPONENT_TYPE,
             Identifier.fromNamespaceAndPath(SeverskGuns.MOD_ID, "ammo"),
-            DataComponentType.<Integer>builder().persistent(ExtraCodecs.POSITIVE_INT).build()
+            DataComponentType.<Integer>builder().persistent(ExtraCodecs.NON_NEGATIVE_INT).build()
     );
 
     public static void initialize() {}

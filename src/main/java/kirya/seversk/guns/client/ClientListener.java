@@ -47,15 +47,19 @@ public class ClientListener {
         if (itemStack.getItem() instanceof GunItem item) {
             if (client.options.keyAttack.isDown() && !cd.isOnCooldown(itemStack)) {
 
+                var ammo = itemStack.getOrDefault(ModComponents.GUN_AMMO, 0);
+                if (ammo <= 0)
+                    return;
+
                 if (!item.gunProperties.isAuto) {
                     client.options.keyAttack.setDown(false);
                 }
 
-                player.playSound(SoundEvents.ARROW_SHOOT);
                 FireGunPayload payload = new FireGunPayload((byte)0);
                 ClientPlayNetworking.send(payload);
 
                 cd.addCooldown(itemStack, item.gunProperties.attackCooldownTicks);
+                player.playSound(SoundEvents.CROSSBOW_SHOOT);
             }
         }
     }
