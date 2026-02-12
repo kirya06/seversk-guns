@@ -11,7 +11,9 @@ public class GunItem extends Item {
     public GunProperties gunProperties = new GunProperties();
 
     public GunItem(Item.Properties properties) {
-        super(properties);
+        super(properties
+                .component(ModComponents.GUN_AMMO, 8)
+        );
     }
 
     public GunItem withGunProperties(GunProperties props) {

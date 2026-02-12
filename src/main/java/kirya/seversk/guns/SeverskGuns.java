@@ -1,5 +1,6 @@
 package kirya.seversk.guns;
 
+import kirya.seversk.guns.items.ModComponents;
 import kirya.seversk.guns.items.ModItems;
 import net.fabricmc.api.ModInitializer;
 
@@ -20,6 +21,8 @@ public class SeverskGuns implements ModInitializer {
 
 	@Override
 	public void onInitialize() {
+
+		ModComponents.initialize();
 		ModItems.initialize();
 
 		print("initialization finished");

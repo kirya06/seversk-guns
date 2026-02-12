@@ -1,11 +1,20 @@
 package kirya.seversk.guns.client;
 
 import kirya.seversk.guns.items.GunItem;
+import kirya.seversk.guns.items.ModComponents;
+import net.fabricmc.fabric.api.client.item.v1.ItemTooltipCallback;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
+import org.jetbrains.annotations.NotNull;
 
-/// Responsible for listening to client tick events and do stuff. Mainly input related.
+import java.util.List;
+
+/// Responsible for listening to client events (tick, tooltips etc.) and do stuff. Mainly input related.
 public class ClientListener {
 
     public static void onStartTick(Minecraft client) {
@@ -18,6 +27,14 @@ public class ClientListener {
             return;
 
         gunFire(client, player);
+    }
+    public static void onTooltip(ItemStack itemStack, Item.TooltipContext tooltipContext, TooltipFlag tooltipFlag, List<Component> components) {
+
+        if (itemStack.getItem() instanceof GunItem gunItem) {
+            int ammo = itemStack.getOrDefault(ModComponents.GUN_AMMO, 0);
+
+            components.add(Component.literal(String.format("Ammo: %d", ammo)));
+        }
     }
 
     /// detect LMB and try to shoot when holding a gun
@@ -37,4 +54,6 @@ public class ClientListener {
             }
         }
     }
+
+
 }
