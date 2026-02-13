@@ -1,4 +1,8 @@
+[![fapi-badge](https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy/requires/fabric-api_vector.svg)](https://modrinth.com/mod/fabric-api)
+
+
 Minecraft mod that adds small arms inspired by S.T.A.L.K.E.R. series
+
 
 ## TODO
 - [ ] Guns shoot, raycasting and dealing damage
