@@ -3,6 +3,7 @@ package kirya.seversk.guns.items;
 import kirya.seversk.guns.SeverskGuns;
 import kirya.seversk.guns.items.ammunition.AmmoItem;
 import kirya.seversk.guns.items.ammunition.CaliberType;
+import kirya.seversk.guns.items.ammunition.MagComponent;
 import kirya.seversk.guns.items.ammunition.MagItem;
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
 import net.minecraft.core.Registry;
@@ -25,8 +26,8 @@ public class ModItems {
     public static final AmmoItem GENERIC_AMMO = register("generic_ammo", AmmoItem::new, new Item.Properties())
             .withAmmoType(CaliberType.Generic);
 
-    public static final MagItem GENERIC_MAG = register("generic_mag", MagItem::new, new Item.Properties())
-            .withAmmoType(CaliberType.Generic)
+    public static final MagItem GENERIC_MAG = register("generic_mag", MagItem::new, new Item.Properties()
+            .component(ModComponents.MAG, new MagComponent(0, (byte)CaliberType.Generic.ordinal(), "")))
             .withCapacity(10);
 
     // creative tab

@@ -1,5 +1,6 @@
 package kirya.seversk.guns.items.ammunition;
 
+import kirya.seversk.guns.items.ModComponents;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.Item;
 
@@ -10,14 +11,10 @@ public class MagItem extends Item {
 
     public MagItem(Item.Properties properties) {
         super(
-                properties.stacksTo(1)
-                        .modelId(Identifier.parse("minecraft:bundle"))
+                properties
+                        .stacksTo(1)
+                        .modelId(Identifier.parse("minecraft:bundle")) // placeholder
         );
-    }
-
-    public MagItem withAmmoType(CaliberType type) {
-        caliber = type;
-        return this;
     }
 
     public MagItem withCapacity(int capacity) {
