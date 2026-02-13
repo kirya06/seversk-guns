@@ -14,14 +14,18 @@ import net.minecraft.util.ExtraCodecs;
 ///
 /// loadedAmmo -> string name of the currently loaded ammunition
 ///
-public record MagComponent(int ammo, byte caliber, String loadedAmmo) {
+public record MagComponent(int ammo, int caliber, String loadedAmmo) {
 
     public static final Codec<MagComponent> CODEC = RecordCodecBuilder.create(builder -> {
         return builder.group(
                 ExtraCodecs.NON_NEGATIVE_INT.fieldOf("ammo").forGetter(MagComponent::ammo),
-                Codec.BYTE.fieldOf("caliber").forGetter(MagComponent::caliber),
+                ExtraCodecs.NON_NEGATIVE_INT.fieldOf("caliber").forGetter(MagComponent::caliber),
                 Codec.STRING.fieldOf("loaded_ammo").forGetter(MagComponent::loadedAmmo)
         ).apply(builder, MagComponent::new);
     });
+
+    public CaliberType getCaliberType() {
+        return CaliberType.fromInt(this.caliber);
+    }
 
 }

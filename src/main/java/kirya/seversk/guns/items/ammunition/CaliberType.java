@@ -15,6 +15,9 @@ public enum CaliberType {
     Shotgun,
 
     /// 5.45 caliber
-    AK
+    AK;
 
+    public static CaliberType fromInt(int i) {
+        return CaliberType.values()[i];
+    }
 }

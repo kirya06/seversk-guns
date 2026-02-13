@@ -27,7 +27,7 @@ public class ModItems {
             .withAmmoType(CaliberType.Generic);
 
     public static final MagItem GENERIC_MAG = register("generic_mag", MagItem::new, new Item.Properties()
-            .component(ModComponents.MAG, new MagComponent(0, (byte)CaliberType.Generic.ordinal(), "")))
+            .component(ModComponents.MAG, new MagComponent(0, CaliberType.Generic.ordinal(), "")))
             .withCapacity(10);
 
     // creative tab
