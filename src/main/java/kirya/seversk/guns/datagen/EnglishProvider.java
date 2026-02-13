@@ -19,6 +19,8 @@ public class EnglishProvider extends FabricLanguageProvider {
         /// items
 
         translationBuilder.add("item.seversk-guns.generic_pistol", "Generic Pistol");
+        translationBuilder.add("item.seversk-guns.generic_ammo", "Generic Ammo");
+        translationBuilder.add("item.seversk-guns.generic_mag", "Generic Magazine");
 
         /// keybinds
 
