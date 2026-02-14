@@ -22,12 +22,11 @@ public class ModItems {
     public static final GunItem GENERIC_PISTOL = register("generic_pistol", GunItem::new, new Item.Properties())
             .withGunProperties(GunProperties.getGenericGun());
 
-    public static final AmmoItem GENERIC_AMMO = registerAmmoItem(CaliberType.GENERIC, AmmoType.GENERIC);
-    public static final AmmoItem PISTOL_FMJ = registerAmmoItem(CaliberType.PISTOL, AmmoType.FMJ);
+    public static final AmmoItem GENERIC_AMMO = registerAmmo(CaliberType.GENERIC, AmmoType.GENERIC);
+    public static final AmmoItem PISTOL_FMJ = registerAmmo(CaliberType.PISTOL, AmmoType.FMJ);
 
-    public static final MagItem GENERIC_MAG = register("generic_mag", MagItem::new, new Item.Properties()
-            .component(ModComponents.MAG, new MagComponent(0, CaliberType.GENERIC.ordinal(), AmmoType.GENERIC.ordinal())))
-            .withCapacity(10);
+    public static final MagItem GENERIC_MAG = registerMag("test", CaliberType.GENERIC, 8);
+
 
     // creative tab
     public static final ResourceKey<CreativeModeTab> SEVERSK_CREATIVE_TAB_KEY = ResourceKey.create(BuiltInRegistries.CREATIVE_MODE_TAB.key(), Identifier.fromNamespaceAndPath(SeverskGuns.MOD_ID, "creative_tab"));
@@ -59,6 +58,19 @@ public class ModItems {
         return  item;
     }
 
+    public static MagItem registerMag(String name, CaliberType caliber, int maxCapacity) {
+
+        ResourceKey<Item> itemKey = ResourceKey.create(
+                Registries.ITEM,
+                Identifier.fromNamespaceAndPath(SeverskGuns.MOD_ID, String.format("mag_%s_%s", name, caliber.name().toLowerCase()))
+        );
+
+        MagItem item = new MagItem(new Item.Properties().setId(itemKey), caliber, maxCapacity);
+        Registry.register(BuiltInRegistries.ITEM, itemKey, item);
+
+        return item;
+    }
+
     /// where
     ///
     /// x -> caliber
@@ -73,7 +85,7 @@ public class ModItems {
         ammoRegistry = new AmmoItem[caliberCount][ammoCount];
     }
 
-    public static AmmoItem registerAmmoItem(CaliberType caliber, AmmoType ammoType) {
+    public static AmmoItem registerAmmo(CaliberType caliber, AmmoType ammoType) {
         if (ammoRegistry == null)
             initializeAmmoRegistry();
 

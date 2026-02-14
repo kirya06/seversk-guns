@@ -11,19 +11,18 @@ import net.minecraft.world.item.ItemStack;
 
 public class MagItem extends Item {
 
-    public int maxCapacity = 1;
+    public int maxCapacity;
 
-    public MagItem(Properties properties) {
+    public MagItem(Properties properties, CaliberType caliber, int capacity) {
+
         super(
                 properties
+                        .component(ModComponents.MAG, new MagComponent(0, caliber.ordinal(), capacity))
                         .stacksTo(1)
                         .modelId(Identifier.parse("minecraft:bundle")) // placeholder
         );
-    }
 
-    public MagItem withCapacity(int capacity) {
         maxCapacity = capacity;
-        return this;
     }
 
     /// returns true if the ammo was successfully consumed.
