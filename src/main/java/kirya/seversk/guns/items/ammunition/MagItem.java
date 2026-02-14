@@ -8,8 +8,11 @@ import net.minecraft.world.inventory.ClickAction;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.util.ARGB;
 
 public class MagItem extends Item {
+
+    public static final int ITEM_BAR_COLOR = ARGB.color(167, 206, 201);
 
     public int maxCapacity;
 
@@ -25,6 +28,8 @@ public class MagItem extends Item {
         maxCapacity = capacity;
     }
 
+    /// consume an ammo like it was shot out the gun
+    ///
     /// returns true if the ammo was successfully consumed.
     public boolean consumeAmmo(ItemStack mag) {
         return true;
@@ -39,11 +44,15 @@ public class MagItem extends Item {
                 return false;
 
             if (click == ClickAction.PRIMARY) {
-                otherItemStack.setCount(0);
+                otherItemStack.shrink(
+                        addToMag(mag, otherItemStack, -1)
+                );
             }
 
             if (click == ClickAction.SECONDARY) {
-                otherItemStack.shrink(1);
+                otherItemStack.shrink(
+                        addToMag(mag, otherItemStack, 1)
+                );
             }
 
             return true;
@@ -53,17 +62,21 @@ public class MagItem extends Item {
     }
 
     @Override
-    public boolean overrideStackedOnOther(ItemStack itemStack, Slot slot, ClickAction click, Player player) {
+    public boolean overrideStackedOnOther(ItemStack mag, Slot slot, ClickAction click, Player player) {
         ItemStack slotStack = slot.getItem();
 
         if (slotStack.getItem() instanceof AmmoItem) {
 
-            if (!canBeLoadedIntoMag(itemStack, slotStack))
+            if (!canBeLoadedIntoMag(mag, slotStack))
                 return false;
 
             // consume the whole ammo stack
-            if (click == ClickAction.SECONDARY) {
-                slotStack.setCount(0);
+            if (click == ClickAction.PRIMARY) {
+
+                slotStack.shrink(
+                        addToMag(mag, slotStack, -1)
+                );
+
                 return true;
             }
 
@@ -73,10 +86,49 @@ public class MagItem extends Item {
         // return super.overrideStackedOnOther(itemStack, slot, clickAction, player);
     }
 
+    @Override
+    public boolean isBarVisible(ItemStack itemStack) {
+        var magComponent = getMagComponent(itemStack);
+
+        return magComponent.ammo() > 0;
+    }
+
+    @Override
+    public int getBarWidth(ItemStack itemStack) {
+        var magComponent = getMagComponent(itemStack);
+        return Math.min(13 * magComponent.ammo() / maxCapacity, 13);
+    }
+
+    @Override
+    public int getBarColor(ItemStack itemStack) {
+        return ITEM_BAR_COLOR;
+    }
+
     /// adding ammo into the mag. Amount specifies how much ammo we want to add, use -1 to consume the whole stack if possible.
     ///
     /// returns the amount of ammo we grabbed from the stack
     private int addToMag(ItemStack mag, ItemStack ammo, int amount) {
+        if (amount < 0)
+            amount = ammo.getCount();
+
+        var ammoItem = (AmmoItem)ammo.getItem();
+        var magItem = (MagItem)mag.getItem();
+        var magComponent = getMagComponent(mag);
+
+        int ammoToInsert = Math.min(magItem.maxCapacity - magComponent.ammo(), amount);
+
+        mag.set(ModComponents.MAG, new MagComponent(
+                magComponent.ammo() + ammoToInsert,
+                magComponent.caliber(),
+                ammoItem.ammoType.ordinal()
+        ));
+        return ammoToInsert;
+    }
+
+    /// empty the mag into the specified slot
+    ///
+    /// returns the amount of ammo it grabbed from the mag
+    private int emptyTheMag(ItemStack mag, Slot slot) {
         return 0;
     }
 
