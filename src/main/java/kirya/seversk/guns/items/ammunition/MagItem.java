@@ -37,9 +37,10 @@ public class MagItem extends Item {
 
         if (otherItemStack.getItem() instanceof AmmoItem ) {
 
-            if (isCaliberEqual(mag, otherItemStack)) {
-                otherItemStack.setCount(0);
-            }
+            if (!isCaliberEqual(mag, otherItemStack))
+                return false;
+
+            otherItemStack.setCount(0);
 
             return true;
         }
