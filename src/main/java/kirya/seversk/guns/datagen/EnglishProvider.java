@@ -71,6 +71,11 @@ public class EnglishProvider extends FabricLanguageProvider {
                 "Normal Magazine"
         );
 
+        translationBuilder.add(
+                getMagTranslation("makarov", CaliberType.PISTOL),
+                "Makarov Pistol Magazine"
+        );
+
     }
 
     public static String getMagTranslation(String name, CaliberType caliber) {

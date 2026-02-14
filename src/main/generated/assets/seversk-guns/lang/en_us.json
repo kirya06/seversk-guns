@@ -10,6 +10,7 @@
   "caliber.seversk-guns.pistol_acp": ".45 ACP",
   "caliber.seversk-guns.pistol_foreign": "9x19",
   "caliber.seversk-guns.shotgun": "12 Gauge",
+  "item.seversk-guns.mag_makarov_pistol": "Makarov Pistol Magazine",
   "item.seversk-guns.mag_test_generic": "Normal Magazine",
   "key.category.seversk-guns.gun": "Seversk Guns",
   "key.seversk-guns.reload": "Reload",

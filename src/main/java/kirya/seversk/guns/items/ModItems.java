@@ -23,9 +23,11 @@ public class ModItems {
             .withGunProperties(GunProperties.getGenericGun());
 
     public static final AmmoItem GENERIC_AMMO = registerAmmo(CaliberType.GENERIC, AmmoType.GENERIC);
-    public static final AmmoItem PISTOL_FMJ = registerAmmo(CaliberType.PISTOL, AmmoType.FMJ);
+    public static final AmmoItem AMMO_PISTOL_FMJ = registerAmmo(CaliberType.PISTOL, AmmoType.FMJ);
+    public static final AmmoItem AMMO_PISTOL_LOW_QUALITY = registerAmmo(CaliberType.PISTOL, AmmoType.LOW_QUALITY);
 
-    public static final MagItem GENERIC_MAG = registerMag("test", CaliberType.GENERIC, 8);
+    public static final MagItem MAG_GENERIC = registerMag("test", CaliberType.GENERIC, 8);
+    public static final MagItem MAG_MAKAROV = registerMag("makarov", CaliberType.PISTOL, 8);
 
 
     // creative tab
@@ -36,9 +38,9 @@ public class ModItems {
 
             .displayItems((params, output) -> {
 
-                output.accept(ModItems.GENERIC_PISTOL);
-                output.accept(ModItems.GENERIC_AMMO);
-                output.accept(ModItems.GENERIC_MAG);
+                output.accept(MAG_MAKAROV);
+                output.accept(AMMO_PISTOL_FMJ);
+                output.accept(AMMO_PISTOL_LOW_QUALITY);
 
             })
 
