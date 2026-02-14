@@ -24,10 +24,10 @@ public class ModItems {
             .withGunProperties(GunProperties.getGenericGun());
 
     public static final AmmoItem GENERIC_AMMO = register("generic_ammo", AmmoItem::new, new Item.Properties())
-            .withAmmoType(CaliberType.Generic);
+            .withAmmoType(CaliberType.GENERIC);
 
     public static final MagItem GENERIC_MAG = register("generic_mag", MagItem::new, new Item.Properties()
-            .component(ModComponents.MAG, new MagComponent(0, CaliberType.Generic.ordinal(), "")))
+            .component(ModComponents.MAG, new MagComponent(0, CaliberType.GENERIC.ordinal(), "")))
             .withCapacity(10);
 
     // creative tab

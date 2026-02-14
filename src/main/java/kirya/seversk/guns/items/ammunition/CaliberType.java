@@ -2,17 +2,17 @@ package kirya.seversk.guns.items.ammunition;
 
 public enum CaliberType {
     /// mainly for testing purposes
-    Generic,
+    GENERIC,
 
     /// 9x18 caliber
-    Pistol,
+    PISTOL,
     /// 9x19 caliber
-    PistolForeign,
+    PISTOL_FOREIGN,
     /// .45 ACP
-    PistolAcp,
+    PISTOL_ACP,
 
     /// 12 Gauge
-    Shotgun,
+    SHOTGUN,
 
     /// 5.45 caliber
     AK;
