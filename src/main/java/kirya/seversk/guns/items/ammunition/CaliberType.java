@@ -27,6 +27,6 @@ public enum CaliberType {
     }
 
     public static String getTranslationKey(CaliberType type) {
-        return String.format("caliber.%s", type.toString().toLowerCase());
+        return String.format("caliber.seversk-guns.%s", type.toString().toLowerCase());
     }
 }
