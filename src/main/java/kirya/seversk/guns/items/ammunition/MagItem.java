@@ -28,6 +28,13 @@ public class MagItem extends Item {
         maxCapacity = capacity;
     }
 
+    public MagComponent getMagComponent(ItemStack mag) {
+        if (!(mag.getItem() instanceof MagItem))
+            throw new  IllegalArgumentException(mag.toString());
+
+        return mag.get(ModComponents.MAG);
+    }
+
     /// consume an ammo like it was shot out the gun
     ///
     /// returns true if the ammo was successfully consumed.
@@ -130,13 +137,6 @@ public class MagItem extends Item {
     /// returns the amount of ammo it grabbed from the mag
     private int emptyTheMag(ItemStack mag, Slot slot) {
         return 0;
-    }
-
-    private MagComponent getMagComponent(ItemStack mag) {
-        if (!(mag.getItem() instanceof MagItem))
-            throw new  IllegalArgumentException(mag.toString());
-
-        return mag.get(ModComponents.MAG);
     }
 
     /// if ammo caliber equals the caliber of mag - return true

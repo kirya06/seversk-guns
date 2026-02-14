@@ -25,9 +25,13 @@ public class AmmoItem extends Item {
         return this;
     }
 
+    public static Component getTranslatedName(CaliberType caliber, AmmoType ammo) {
+        return Component.translatable(AmmoType.getTranslationKey(ammo)).append(" ").append(Component.translatable(CaliberType.getTranslationKey(caliber)));
+    }
+
     @Override
     public @NonNull Component getName(@NonNull ItemStack itemStack) {
-        return Component.translatable(AmmoType.getTranslationKey(ammoType)).append(" ").append(Component.translatable(CaliberType.getTranslationKey(caliber)));
+        return getTranslatedName(caliber, ammoType);
     }
 }
 

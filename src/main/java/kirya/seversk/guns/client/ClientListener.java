@@ -2,6 +2,10 @@ package kirya.seversk.guns.client;
 
 import kirya.seversk.guns.items.GunItem;
 import kirya.seversk.guns.items.ModComponents;
+import kirya.seversk.guns.items.ammunition.AmmoItem;
+import kirya.seversk.guns.items.ammunition.AmmoType;
+import kirya.seversk.guns.items.ammunition.CaliberType;
+import kirya.seversk.guns.items.ammunition.MagItem;
 import kirya.seversk.guns.network.C2S.FireGunPayload;
 import net.fabricmc.fabric.api.client.item.v1.ItemTooltipCallback;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
@@ -36,6 +40,35 @@ public class ClientListener {
             int ammo = itemStack.getOrDefault(ModComponents.GUN_AMMO, 0);
 
             components.add(Component.literal(String.format("Ammo: %d", ammo)));
+        }
+
+        if (itemStack.getItem() instanceof MagItem magItem) {
+            var magComponent = magItem.getMagComponent(itemStack);
+
+            if (magComponent.ammo() == 0) {
+
+                components.add(
+                        Component.literal(String.format("[%s]", Component.translatable("magtooltip.seversk-guns.empty").getString()))
+                );
+                components.add(Component.literal(""));
+
+            } else {
+
+                components.add(
+                        Component.literal(String.format("%d / %d", magComponent.ammo(), magItem.maxCapacity))
+                );
+                components.add(
+                        Component.literal(String.format("[%s]", AmmoItem.getTranslatedName(CaliberType.fromInt(magComponent.caliber()), AmmoType.fromInt(magComponent.ammoType())).getString()))
+                );
+
+                components.add(Component.literal(""));
+
+            }
+
+            components.add(
+                    Component.translatable("magtooltip.seversk-guns.caliber")
+                            .append(Component.translatable(CaliberType.getTranslationKey(CaliberType.fromInt(magComponent.caliber()))))
+            );
         }
     }
 

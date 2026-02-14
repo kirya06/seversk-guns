@@ -30,6 +30,7 @@ public class EnglishProvider extends FabricLanguageProvider {
         translationBuilder.add("key.seversk-guns.reload", "Reload");
 
         generateCaliberAndAmmo(translationBuilder);
+        generateMagTooltip(translationBuilder);
 
     }
 
@@ -37,7 +38,7 @@ public class EnglishProvider extends FabricLanguageProvider {
 
         /// calibers
 
-        translationBuilder.add(CaliberType.getTranslationKey(CaliberType.GENERIC), "Unknown");
+        translationBuilder.add(CaliberType.getTranslationKey(CaliberType.GENERIC), "4x20");
         translationBuilder.add(CaliberType.getTranslationKey(CaliberType.PISTOL), "9x18");
         translationBuilder.add(CaliberType.getTranslationKey(CaliberType.PISTOL_FOREIGN), "9x19");
         translationBuilder.add(CaliberType.getTranslationKey(CaliberType.PISTOL_ACP), ".45 ACP");
@@ -46,12 +47,16 @@ public class EnglishProvider extends FabricLanguageProvider {
 
 
         /// ammo types
+
         translationBuilder.add(AmmoType.getTranslationKey(AmmoType.GENERIC), "Strange");
         translationBuilder.add(AmmoType.getTranslationKey(AmmoType.LOW_QUALITY), "Handicraft");
         translationBuilder.add(AmmoType.getTranslationKey(AmmoType.FMJ), "FMJ");
         translationBuilder.add(AmmoType.getTranslationKey(AmmoType.ARMOR_PIERCING), "Armor Piercing");
         translationBuilder.add(AmmoType.getTranslationKey(AmmoType.HOLLOW_POINT), "Hollow Point");
+    }
 
-
+    private void generateMagTooltip(TranslationBuilder translationBuilder) {
+        translationBuilder.add("magtooltip.seversk-guns.empty", "Empty");
+        translationBuilder.add("magtooltip.seversk-guns.caliber", "Caliber: ");
     }
 }

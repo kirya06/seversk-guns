@@ -5,7 +5,7 @@
   "ammo_type.seversk-guns.hollow_point": "Hollow Point",
   "ammo_type.seversk-guns.low_quality": "Handicraft",
   "caliber.seversk-guns.ak": "5.45",
-  "caliber.seversk-guns.generic": "Unknown",
+  "caliber.seversk-guns.generic": "4x20",
   "caliber.seversk-guns.pistol": "9x18",
   "caliber.seversk-guns.pistol_acp": ".45 ACP",
   "caliber.seversk-guns.pistol_foreign": "9x19",
@@ -14,5 +14,7 @@
   "item.seversk-guns.generic_mag": "Generic Magazine",
   "item.seversk-guns.generic_pistol": "Generic Pistol",
   "key.category.seversk-guns.gun": "Seversk Guns",
-  "key.seversk-guns.reload": "Reload"
+  "key.seversk-guns.reload": "Reload",
+  "magtooltip.seversk-guns.caliber": "Caliber: ",
+  "magtooltip.seversk-guns.empty": "Empty"
 }
