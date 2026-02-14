@@ -17,4 +17,8 @@ public enum AmmoType {
 
         return values[i];
     }
+
+    public static String getTranslationKey(AmmoType type) {
+        return String.format("ammo_type.%s", type.toString().toLowerCase());
+    }
 }
