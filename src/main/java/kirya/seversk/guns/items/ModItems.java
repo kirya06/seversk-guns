@@ -92,7 +92,7 @@ public class ModItems {
             initializeAmmoRegistry();
 
         var caliberInt = caliber.ordinal();
-        var ammoInt = caliber.ordinal();
+        var ammoInt = ammoType.ordinal();
 
         var caliberName = caliber.name().toLowerCase();
         var ammoName = ammoType.name().toLowerCase(Locale.ROOT);
@@ -102,6 +102,7 @@ public class ModItems {
         Registry.register(BuiltInRegistries.ITEM, itemKey, item);
 
         ammoRegistry[caliberInt][ammoInt] = item;
+        SeverskGuns.print(String.format("%d %d %s", caliberInt, ammoInt, ammoName));
 
         return item;
     }

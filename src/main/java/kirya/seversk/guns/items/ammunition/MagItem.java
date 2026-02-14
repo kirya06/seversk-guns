@@ -2,6 +2,7 @@ package kirya.seversk.guns.items.ammunition;
 
 import kirya.seversk.guns.SeverskGuns;
 import kirya.seversk.guns.items.ModComponents;
+import kirya.seversk.guns.items.ModItems;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.SlotAccess;
 import net.minecraft.world.entity.player.Player;
@@ -90,6 +91,15 @@ public class MagItem extends Item {
 
         }
 
+        if (slotStack.isEmpty() || slotStack.getItem() instanceof AmmoItem) {
+
+            if (click == ClickAction.SECONDARY) {
+                emptyTheMag(mag, slot);
+                return true;
+            }
+
+        }
+
         return false;
         // return super.overrideStackedOnOther(itemStack, slot, clickAction, player);
     }
@@ -134,10 +144,39 @@ public class MagItem extends Item {
     }
 
     /// empty the mag into the specified slot
-    ///
-    /// returns the amount of ammo it grabbed from the mag
-    private int emptyTheMag(ItemStack mag, Slot slot) {
-        return 0;
+    private void emptyTheMag(ItemStack mag, Slot slot) {
+        var magComponent = getMagComponent(mag);
+        var ammoItem = ModItems.getAmmoItem(magComponent.getCaliberType(), magComponent.getAmmoType());
+
+        int ammoDiscarded = 0;
+
+        if (ammoItem == null)
+            ammoItem = ModItems.GENERIC_AMMO;
+
+        if (ammoItem.equals(slot.getItem().getItem())) {
+            var stack = slot.getItem();
+            var count = stack.getCount();
+            var stackResult = Math.min(stack.getCount() + magComponent.ammo(), stack.getMaxStackSize());
+
+            stack.setCount(stackResult);
+
+            ammoDiscarded = stackResult - count;
+        }
+
+        if (!slot.hasItem()) {
+            var stack = new ItemStack(ammoItem);
+            stack.setCount(magComponent.ammo());
+            slot.safeInsert(stack);
+
+            ammoDiscarded = magComponent.ammo();
+        }
+
+        if (ammoDiscarded > 0) {
+            mag.set(
+                    ModComponents.MAG,
+                    new MagComponent(magComponent.ammo() - ammoDiscarded, magComponent.caliber(), magComponent.ammoType())
+            );
+        }
     }
 
     /// if ammo caliber equals the caliber of mag - return true
