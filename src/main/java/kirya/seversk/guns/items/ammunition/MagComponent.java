@@ -12,15 +12,15 @@ import net.minecraft.util.ExtraCodecs;
 ///
 /// caliber -> byte representation of CaliberType
 ///
-/// loadedAmmo -> string name of the currently loaded ammunition
+/// ammoType -> byte representation of AmmoType
 ///
-public record MagComponent(int ammo, int caliber, String loadedAmmo) {
+public record MagComponent(int ammo, int caliber, int ammoType) {
 
     public static final Codec<MagComponent> CODEC = RecordCodecBuilder.create(builder -> {
         return builder.group(
                 ExtraCodecs.NON_NEGATIVE_INT.fieldOf("ammo").forGetter(MagComponent::ammo),
                 ExtraCodecs.NON_NEGATIVE_INT.fieldOf("caliber").forGetter(MagComponent::caliber),
-                Codec.STRING.fieldOf("loaded_ammo").forGetter(MagComponent::loadedAmmo)
+                ExtraCodecs.NON_NEGATIVE_INT.fieldOf("ammo_type").forGetter(MagComponent::ammoType)
         ).apply(builder, MagComponent::new);
     });
 
@@ -28,4 +28,7 @@ public record MagComponent(int ammo, int caliber, String loadedAmmo) {
         return CaliberType.fromInt(this.caliber);
     }
 
+    public AmmoType getAmmoType() {
+        return AmmoType.fromInt(this.ammoType);
+    }
 }

@@ -18,6 +18,11 @@ public enum CaliberType {
     AK;
 
     public static CaliberType fromInt(int i) {
-        return CaliberType.values()[i];
+        var values = CaliberType.values();
+
+        if(i > values.length - 1)
+            return GENERIC;
+
+        return values[i];
     }
 }

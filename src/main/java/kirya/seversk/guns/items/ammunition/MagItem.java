@@ -1,6 +1,5 @@
 package kirya.seversk.guns.items.ammunition;
 
-import kirya.seversk.guns.SeverskGuns;
 import kirya.seversk.guns.items.ModComponents;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.SlotAccess;
@@ -33,14 +32,20 @@ public class MagItem extends Item {
     }
 
     @Override
-    public boolean overrideOtherStackedOnMe(ItemStack mag, ItemStack otherItemStack, Slot slot, ClickAction clickAction, Player player, SlotAccess slotAccess) {
+    public boolean overrideOtherStackedOnMe(ItemStack mag, ItemStack otherItemStack, Slot slot, ClickAction click, Player player, SlotAccess slotAccess) {
 
         if (otherItemStack.getItem() instanceof AmmoItem ) {
 
-            if (!isCaliberEqual(mag, otherItemStack))
+            if (!canBeLoadedIntoMag(mag, otherItemStack))
                 return false;
 
-            otherItemStack.setCount(0);
+            if (click == ClickAction.PRIMARY) {
+                otherItemStack.setCount(0);
+            }
+
+            if (click == ClickAction.SECONDARY) {
+                otherItemStack.shrink(1);
+            }
 
             return true;
         }
@@ -54,7 +59,7 @@ public class MagItem extends Item {
 
         if (slotStack.getItem() instanceof AmmoItem) {
 
-            if (!isCaliberEqual(itemStack, slotStack))
+            if (!canBeLoadedIntoMag(itemStack, slotStack))
                 return false;
 
             // consume the whole ammo stack
@@ -69,7 +74,10 @@ public class MagItem extends Item {
         // return super.overrideStackedOnOther(itemStack, slot, clickAction, player);
     }
 
-    private int addToMag(ItemStack mag, ItemStack ammo) {
+    /// adding ammo into the mag. Amount specifies how much ammo we want to add, use -1 to consume the whole stack if possible.
+    ///
+    /// returns the amount of ammo we grabbed from the stack
+    private int addToMag(ItemStack mag, ItemStack ammo, int amount) {
         return 0;
     }
 
@@ -88,8 +96,20 @@ public class MagItem extends Item {
             return false;
 
         CaliberType magCaliber = getMagComponent(mag).getCaliberType();
-        CaliberType ammoCaliber = ((AmmoItem) ammo.getItem()).Caliber;
+        CaliberType ammoCaliber = ((AmmoItem) ammo.getItem()).caliber;
 
         return magCaliber == ammoCaliber;
+    }
+
+    private boolean canBeLoadedIntoMag(ItemStack mag, ItemStack ammo) {
+        if (!isCaliberEqual(mag, ammo))
+            return false;
+
+        var magComponent = getMagComponent(mag);
+
+        if (magComponent.ammo() == 0)
+            return true;
+
+        return magComponent.getAmmoType() == ((AmmoItem)(ammo.getItem())).ammoType;
     }
 }
