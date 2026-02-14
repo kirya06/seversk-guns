@@ -12,7 +12,9 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import org.jspecify.annotations.Nullable;
 
+import java.util.Locale;
 import java.util.function.Function;
 
 public class ModItems {
@@ -20,8 +22,8 @@ public class ModItems {
     public static final GunItem GENERIC_PISTOL = register("generic_pistol", GunItem::new, new Item.Properties())
             .withGunProperties(GunProperties.getGenericGun());
 
-    public static final AmmoItem GENERIC_AMMO = register("generic_ammo", AmmoItem::new, new Item.Properties())
-            .withCaliber(CaliberType.GENERIC);
+    public static final AmmoItem GENERIC_AMMO = registerAmmoItem(CaliberType.GENERIC, AmmoType.GENERIC);
+    public static final AmmoItem PISTOL_FMJ = registerAmmoItem(CaliberType.PISTOL, AmmoType.FMJ);
 
     public static final MagItem GENERIC_MAG = register("generic_mag", MagItem::new, new Item.Properties()
             .component(ModComponents.MAG, new MagComponent(0, CaliberType.GENERIC.ordinal(), AmmoType.GENERIC.ordinal())))
@@ -48,12 +50,50 @@ public class ModItems {
         Registry.register(BuiltInRegistries.CREATIVE_MODE_TAB, SEVERSK_CREATIVE_TAB_KEY, SEVERSK_CREATIVE_TAB);
     }
 
-    public static <GenericItem extends Item> GenericItem register(String name, Function<Item.Properties, GenericItem> itemFactory, Item.Properties settings) {
+    public static <GenericItem extends Item> GenericItem register(String name, Function<Item.Properties, GenericItem> itemFactory, Item.Properties properties) {
 
         ResourceKey<Item> itemKey = ResourceKey.create(Registries.ITEM, Identifier.fromNamespaceAndPath(SeverskGuns.MOD_ID, name));
-        GenericItem item = itemFactory.apply(settings.setId(itemKey));
+        GenericItem item = itemFactory.apply(properties.setId(itemKey));
         Registry.register(BuiltInRegistries.ITEM, itemKey, item);
 
         return  item;
+    }
+
+    /// where
+    ///
+    /// x -> caliber
+    ///
+    /// y -> ammoType
+    private static AmmoItem[][] ammoRegistry;
+
+    private static void initializeAmmoRegistry() {
+        var caliberCount = CaliberType.values().length;
+        var ammoCount = AmmoType.values().length;
+
+        ammoRegistry = new AmmoItem[caliberCount][ammoCount];
+    }
+
+    public static AmmoItem registerAmmoItem(CaliberType caliber, AmmoType ammoType) {
+        if (ammoRegistry == null)
+            initializeAmmoRegistry();
+
+        var caliberInt = caliber.ordinal();
+        var ammoInt = caliber.ordinal();
+
+        var caliberName = caliber.name().toLowerCase();
+        var ammoName = ammoType.name().toLowerCase(Locale.ROOT);
+
+        ResourceKey<Item> itemKey = ResourceKey.create(Registries.ITEM, Identifier.fromNamespaceAndPath(SeverskGuns.MOD_ID, String.format("ammo_%s_%s", caliberName, ammoName)));
+        AmmoItem item = new AmmoItem(new Item.Properties().setId(itemKey)).withCaliber(caliber).withAmmoType(ammoType);
+        Registry.register(BuiltInRegistries.ITEM, itemKey, item);
+
+        ammoRegistry[caliberInt][ammoInt] = item;
+
+        return item;
+    }
+
+    @Nullable
+    public static AmmoItem getAmmoItem(CaliberType caliber, AmmoType ammo) {
+        return ammoRegistry[caliber.ordinal()][ammo.ordinal()];
     }
 }
