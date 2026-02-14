@@ -12,12 +12,13 @@ import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.Style;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.util.ARGB;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import org.jetbrains.annotations.NotNull;
-
 import java.util.List;
 
 /// Responsible for listening to client events (tick, tooltips etc.) and do stuff. Mainly input related.
@@ -49,6 +50,7 @@ public class ClientListener {
 
                 components.add(
                         Component.literal(String.format("[%s]", Component.translatable("magtooltip.seversk-guns.empty").getString()))
+                                .withColor(ARGB.color(170, 170, 170))
                 );
                 components.add(Component.literal(""));
 
@@ -56,9 +58,12 @@ public class ClientListener {
 
                 components.add(
                         Component.literal(String.format("%d / %d", magComponent.ammo(), magItem.maxCapacity))
+                                .withColor(ARGB.color(170, 170, 170))
                 );
+
                 components.add(
                         Component.literal(String.format("[%s]", AmmoItem.getTranslatedName(CaliberType.fromInt(magComponent.caliber()), AmmoType.fromInt(magComponent.ammoType())).getString()))
+                                .withColor(ARGB.color(170, 170, 170))
                 );
 
                 components.add(Component.literal(""));
