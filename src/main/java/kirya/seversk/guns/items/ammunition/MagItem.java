@@ -1,5 +1,6 @@
 package kirya.seversk.guns.items.ammunition;
 
+import kirya.seversk.guns.SeverskGuns;
 import kirya.seversk.guns.items.ModComponents;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.SlotAccess;

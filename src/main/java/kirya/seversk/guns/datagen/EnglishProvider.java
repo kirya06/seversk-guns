@@ -1,7 +1,10 @@
 package kirya.seversk.guns.datagen;
 
+import kirya.seversk.guns.SeverskGuns;
+import kirya.seversk.guns.items.ModItems;
 import kirya.seversk.guns.items.ammunition.AmmoType;
 import kirya.seversk.guns.items.ammunition.CaliberType;
+import kirya.seversk.guns.items.ammunition.MagItem;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
 import net.minecraft.core.HolderLookup;
@@ -18,11 +21,8 @@ public class EnglishProvider extends FabricLanguageProvider {
 
     @Override
     public void generateTranslations(HolderLookup.@NonNull Provider wrapperLookup, TranslationBuilder translationBuilder) {
-        /// items
 
-        translationBuilder.add("item.seversk-guns.generic_pistol", "Generic Pistol");
-        translationBuilder.add("item.seversk-guns.generic_ammo", "Generic Ammo");
-        translationBuilder.add("item.seversk-guns.generic_mag", "Generic Magazine");
+        generateItems(translationBuilder);
 
         /// keybinds
 
@@ -56,7 +56,24 @@ public class EnglishProvider extends FabricLanguageProvider {
     }
 
     private void generateMagTooltip(TranslationBuilder translationBuilder) {
+
         translationBuilder.add("magtooltip.seversk-guns.empty", "Empty");
         translationBuilder.add("magtooltip.seversk-guns.caliber", "Caliber: ");
+
+    }
+
+    private void generateItems(TranslationBuilder translationBuilder) {
+
+        /// mags
+
+        translationBuilder.add(
+                getMagTranslation("test", CaliberType.GENERIC),
+                "Normal Magazine"
+        );
+
+    }
+
+    public static String getMagTranslation(String name, CaliberType caliber) {
+        return String.format("item.%s.", SeverskGuns.MOD_ID) + String.format("mag_%s_%s", name, caliber.name().toLowerCase());
     }
 }
