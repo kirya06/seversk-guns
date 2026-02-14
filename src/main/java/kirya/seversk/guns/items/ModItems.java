@@ -22,9 +22,9 @@ public class ModItems {
     public static final GunItem GENERIC_PISTOL = register("generic_pistol", GunItem::new, new Item.Properties())
             .withGunProperties(GunProperties.getGenericGun());
 
-    public static final AmmoItem GENERIC_AMMO = registerAmmo(CaliberType.GENERIC, AmmoType.GENERIC);
-    public static final AmmoItem AMMO_PISTOL_FMJ = registerAmmo(CaliberType.PISTOL, AmmoType.FMJ);
-    public static final AmmoItem AMMO_PISTOL_LOW_QUALITY = registerAmmo(CaliberType.PISTOL, AmmoType.LOW_QUALITY);
+    public static final AmmoItem GENERIC_AMMO = registerAmmo(CaliberType.GENERIC, AmmoType.GENERIC, AmmoProperties.generic());
+    public static final AmmoItem AMMO_PISTOL_FMJ = registerAmmo(CaliberType.PISTOL, AmmoType.FMJ, AmmoProperties.fullMetalJacket());
+    public static final AmmoItem AMMO_PISTOL_LOW_QUALITY = registerAmmo(CaliberType.PISTOL, AmmoType.LOW_QUALITY, AmmoProperties.generic());
 
     public static final MagItem MAG_GENERIC = registerMag("test", CaliberType.GENERIC, 8);
     public static final MagItem MAG_MAKAROV = registerMag("makarov", CaliberType.PISTOL, 8);
@@ -87,7 +87,7 @@ public class ModItems {
         ammoRegistry = new AmmoItem[caliberCount][ammoCount];
     }
 
-    public static AmmoItem registerAmmo(CaliberType caliber, AmmoType ammoType) {
+    public static AmmoItem registerAmmo(CaliberType caliber, AmmoType ammoType, AmmoProperties ammoProperties) {
         if (ammoRegistry == null)
             initializeAmmoRegistry();
 
@@ -98,7 +98,12 @@ public class ModItems {
         var ammoName = ammoType.name().toLowerCase(Locale.ROOT);
 
         ResourceKey<Item> itemKey = ResourceKey.create(Registries.ITEM, Identifier.fromNamespaceAndPath(SeverskGuns.MOD_ID, String.format("ammo_%s_%s", caliberName, ammoName)));
-        AmmoItem item = new AmmoItem(new Item.Properties().setId(itemKey)).withCaliber(caliber).withAmmoType(ammoType);
+
+        AmmoItem item = new AmmoItem(new Item.Properties().setId(itemKey))
+                .withCaliber(caliber)
+                .withAmmoType(ammoType)
+                .withAmmoProperties(ammoProperties);
+
         Registry.register(BuiltInRegistries.ITEM, itemKey, item);
 
         ammoRegistry[caliberInt][ammoInt] = item;

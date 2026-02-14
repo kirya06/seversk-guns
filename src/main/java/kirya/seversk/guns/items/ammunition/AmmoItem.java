@@ -11,6 +11,8 @@ public class AmmoItem extends Item {
     public CaliberType caliber = CaliberType.GENERIC;
     public AmmoType ammoType = AmmoType.GENERIC;
 
+    public AmmoProperties ammoProperties;
+
     public AmmoItem(Item.Properties properties) {
         super(properties.modelId(Identifier.parse("minecraft:arrow")));
     }
@@ -22,6 +24,11 @@ public class AmmoItem extends Item {
 
     public AmmoItem withAmmoType(AmmoType type) {
         ammoType = type;
+        return this;
+    }
+
+    public AmmoItem withAmmoProperties(AmmoProperties props) {
+        ammoProperties = props;
         return this;
     }
 
