@@ -34,8 +34,13 @@ public class MagItem extends Item {
 
     @Override
     public boolean overrideOtherStackedOnMe(ItemStack mag, ItemStack otherItemStack, Slot slot, ClickAction clickAction, Player player, SlotAccess slotAccess) {
-        if (otherItemStack.getItem() instanceof AmmoItem && isCaliberEqual(mag, otherItemStack)) {
-            otherItemStack.setCount(0);
+
+        if (otherItemStack.getItem() instanceof AmmoItem ) {
+
+            if (isCaliberEqual(mag, otherItemStack)) {
+                otherItemStack.setCount(0);
+            }
+
             return true;
         }
 
@@ -48,18 +53,20 @@ public class MagItem extends Item {
 
         if (slotStack.getItem() instanceof AmmoItem) {
 
+            if (!isCaliberEqual(itemStack, slotStack))
+                return false;
+
             // consume the whole ammo stack
-            if (click == ClickAction.SECONDARY && isCaliberEqual(itemStack, slotStack)) {
+            if (click == ClickAction.SECONDARY) {
                 slotStack.setCount(0);
                 return true;
             }
+
         }
 
         return false;
         // return super.overrideStackedOnOther(itemStack, slot, clickAction, player);
     }
-
-
 
     private int addToMag(ItemStack mag, ItemStack ammo) {
         return 0;
