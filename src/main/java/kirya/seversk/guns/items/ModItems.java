@@ -18,10 +18,6 @@ import java.util.Locale;
 import java.util.function.Function;
 
 public class ModItems {
-
-    public static final GunItem GENERIC_PISTOL = register("generic_pistol", GunItem::new, new Item.Properties())
-            .withGunProperties(GunProperties.getGenericGun());
-
     public static final AmmoItem GENERIC_AMMO = registerAmmo(CaliberType.GENERIC, AmmoType.GENERIC, AmmoProperties.generic());
     public static final AmmoItem AMMO_PISTOL_FMJ = registerAmmo(CaliberType.PISTOL, AmmoType.FMJ, AmmoProperties.fullMetalJacket());
     public static final AmmoItem AMMO_PISTOL_LOW_QUALITY = registerAmmo(CaliberType.PISTOL, AmmoType.LOW_QUALITY, AmmoProperties.generic());
@@ -33,7 +29,7 @@ public class ModItems {
     // creative tab
     public static final ResourceKey<CreativeModeTab> SEVERSK_CREATIVE_TAB_KEY = ResourceKey.create(BuiltInRegistries.CREATIVE_MODE_TAB.key(), Identifier.fromNamespaceAndPath(SeverskGuns.MOD_ID, "creative_tab"));
     public static final CreativeModeTab SEVERSK_CREATIVE_TAB = FabricItemGroup.builder()
-            .icon(() -> new ItemStack(ModItems.GENERIC_PISTOL))
+            .icon(() -> new ItemStack(ModItems.AMMO_PISTOL_FMJ))
             .title(Component.literal("Seversk Guns"))
 
             .displayItems((params, output) -> {

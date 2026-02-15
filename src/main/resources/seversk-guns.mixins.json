@@ -5,8 +5,6 @@
   "mixins": [
   ],
   "client": [
-    "client.GunInput",
-    "client.GunPose"
   ],
   "injectors": {
     "defaultRequire": 1
