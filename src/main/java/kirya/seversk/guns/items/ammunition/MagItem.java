@@ -24,7 +24,6 @@ public class MagItem extends Item {
                 properties
                         .component(ModComponents.MAG, new MagComponent(0, caliber.ordinal(), capacity))
                         .stacksTo(1)
-                        .modelId(Identifier.parse("minecraft:bundle")) // placeholder
         );
 
         maxCapacity = capacity;
