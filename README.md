@@ -9,7 +9,7 @@ Minecraft mod that adds small arms inspired by S.T.A.L.K.E.R. series
 - [x] Guns use ammo, mag system and loading mags with individual bullets
 - [ ] Guns can be reloaded
 - [ ] Guns are animated
-- [ ] Leaning to sides (like Q/E in stalker)
 - [ ] Gun sounds
 - [ ] ADS
 - [ ] Third-person anims
+- [ ] ~Leaning to sides (like Q/E in stalker)~ should be done in an external mod instead
